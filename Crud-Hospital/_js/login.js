@@ -1,13 +1,14 @@
 function enviaFormNovoLogin(event) {
     event.preventDefault();
 
-    const { email, password } = event.target;
+    const { nome, email, password } = event.target;
     const dados = {
-        email: email.value
+        nome: nome.value
+        ,email: email.value
         ,senha: password.value
     };
 
-    if (!dados.email || !dados.senha) {
+    if (!dados.nome || !dados.email || !dados.senha) {
         return exibeAlerta({
             success: false
             ,message: 'Preencha todos os campos!'
@@ -35,6 +36,7 @@ function enviaFormLogin(event) {
 
     const { email, password } = event.target;
     const dados = {
+        
         email: email.value
         ,senha: password.value
     };
@@ -50,7 +52,7 @@ function enviaFormLogin(event) {
 
             if (!response.success) return
             setTimeout(() => {
-                window.location.href = './home.html'
+                window.location.href = 'home.html'
             }, 2500);
         }
     });

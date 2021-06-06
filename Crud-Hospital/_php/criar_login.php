@@ -2,13 +2,14 @@
 
     include("conexao.php");
 
+    $nome = $_POST["nome"];
     $email = $_POST["email"];
     $senha = $_POST["senha"];
 
-    $sql = "INSERT INTO users(email,senha)
-        VALUES('$email','$senha')";
+    $sql = "INSERT INTO tbusers(nome,email,senha)
+        VALUES('$nome','$email','$senha')";
 
-    $sql1 = "SELECT * FROM users WHERE email='$email'";
+    $sql1 = "SELECT * FROM tbusers WHERE nome='$nome' AND email='$email'";
 
     $query = mysqli_query($conexao,$sql1);
 
@@ -36,6 +37,7 @@
             "success" => true
             ,"message" => "Cadastro realizado com sucesso!"
             ,"data" => array(
+                "nome" => $nome,
                 "email" => $email
             )
         );

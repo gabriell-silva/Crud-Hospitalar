@@ -3,7 +3,7 @@
     $servidor = "localhost";
     $usuario = "root";
     $senha = "";
-    $bd = "cadastro";
+    $bd = "bdHospitalarDeg";
 
     $conexao = mysqli_connect($servidor,$usuario,$senha)
     or die ("Sem conexão ao servidor");

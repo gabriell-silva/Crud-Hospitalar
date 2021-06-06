@@ -1,4 +1,5 @@
 Prova - Tec Web II
+	CRUD - Sistema de Lab. DEG
 
   CADASTRO DE USUÁRIO
 
@@ -7,11 +8,12 @@ Prova - Tec Web II
     Senha
 
 - Tela Cadastro
-    --Informações Usuário{
+    Informações Usuário
+    Nome
     Email
     Senha
-    }
+
 - Index
-    Alterar
-    Pesquisar
+    Cadastrar exame
+    Pesquisar exame
     Deletar
