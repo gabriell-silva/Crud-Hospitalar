@@ -3,16 +3,16 @@
     include("conexao.php");
 
     $nmPaciente $_POST['nmPaciente'];
-    $exame $_POST['exame'];
-    $dtSolicitacao $_POST['dtsolicitacao'];
-    $medSolicitacao $_POST['medSolicita'];
-    $motivoSolicita $_POST['motivoSolicita'];
+    $endereco $_POST['endereco'];
+    $dtNascimento $_POST['dtNascimento'];
+    $cpf $_POST['cpf'];
+    $arqExame $_POST['arqExame'];
 
 
-    $sql = "INSERT INTO tbexams(nmPaciente, exame, dtSolicitacao, medSolicita, motivoSolicita)
-        VALUES('$nmPaciente', '$exame', '$dtSolicitacao', '$medSolicita', '$motivoSolicita')";
+    $sql = "INSERT INTO tbexams(nmPaciente, endereco, dtNascimento, cpf, arqExame)
+        VALUES('$nmPaciente', '$endereco', '$dtNascimento', '$cpf', '$arqExame')";
 
-    $sql1 = "SELECT * FROM tbexams WHERE nmPaciente='$nmPaciente' AND exame='$exame'";
+    $sql1 = "SELECT * FROM tbexams WHERE nmPaciente='$nmPaciente'";
 
     $query = mysqli_query($conexao,$sql1);
 
@@ -41,7 +41,6 @@
             ,"message" => "Exame solicitado com sucesso!"
             ,"data" => array(
                 "nmPaciente" => $nmPaciente
-                ,"exame" => $exame
             )
         );
         echo json_encode($response);

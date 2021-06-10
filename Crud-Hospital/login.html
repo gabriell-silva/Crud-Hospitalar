@@ -15,13 +15,14 @@
 </head>
 <body class="bg-info">
 
+    <!-- MENU -->
     <main>
-
+        <!-- Image -->
         <div class="rounded float-start position-absolute" style="top:20vh; left:45vw; right: 17vw;">
             <img src="./_img/logo/icon-adm-hosp.svg" class="shadow-lg p-3 mb-5 border bg-light rounded-circle" alt="login" style="width: 100px;">
         </div>
-        
-        <div class="card d-flex flex-column position-absolute shadow-lg p-3 mb-5" style=" min-width:20vw; top: 40vh; left:30vw; right: 30vw;">
+        <!-- Login -->
+        <div class="card d-flex flex-column position-absolute shadow-lg p-2 mb-5" style=" min-width:20vw; top: 40vh; left:30vw; right: 30vw;">
             <form onsubmit="enviaFormLogin(event)" method="POST">
                 <div class="card-body">
                         <div class="mb-3">
@@ -53,11 +54,11 @@
                                 </svg>
                             </button>
                         </div>
+                    </div>
             </form>   
-        </div>
-         
+        </div>    
     </main>
-    
+    <!-- Cadastro Login -->
     <div id="cadastro" class="card-son" 
     style=" display:none; position: absolute; width: 30vw; height: 45vh; top: 40%; left: 35%; z-index:999; background: white;">
         <div class="card-tre p-3">
@@ -97,7 +98,7 @@
             </form>
         </div>
     </div>
-
+    <!-- RODAPÉ -->
     <footer class="card-footer fixed-bottom bg-light">
         <span> 2021.1 &copy; Team DEG - All Right Reserved</span>
         <img src="_img/logo/DEG.png" class="position-absolute" style="width: 35px; top: 0; right: 10px;" alt="Logo-DEG">
