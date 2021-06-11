@@ -1,4 +1,4 @@
-function cadastroE(event) {
+function cadastroExa(event) {
     event.preventDefault();
 
     const {nmPaciente, endereco, dtNascimento, cpf, arqExame} = event.target;
@@ -6,7 +6,7 @@ function cadastroE(event) {
         nmPaciente: nmPaciente.value 
         , endereco: endereco.value
         , dtNascimento: dtNascimento.value
-        , cpf: cpf.value
+        , cpf: parseInt((cpf.value).replace('.', '').replace('.', '').replace('-',''))
         , arqExame: arqExame.value
     };
 
@@ -20,42 +20,73 @@ function cadastroE(event) {
     $.ajax({
         type: 'POST',
         dataType: 'json',
-        url: './_php/cadastrar_exame.php',
+        url: './_php/cadastroExame.php',
         async: true,
         data: dados,
         success: function (response) {
             exibeAlerta(response)
 
             if (!response.success) return
-            event.target.reset()   
+            event.target.reset() 
         }
     });
 }
 
-//outro
+var time = null;
+function pesquisaComFiltro(event) {
+    clearTimeout(time);
 
-function exibeAlerta(res) {
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
+    const dados = {paciente: event.target.value}
+
+    time = setTimeout(() => {
+        buscaPacientes(dados);              
+    }, 1000);
+}
+
+function buscaPacientes(dados = {paciente: ''}) {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: './_php/pesquisarExame.php',
+        async: true,
+        data: dados,
+        success: function (response) {
+            montaPacientes(response)       
         }
-      })
+    });      
+}
 
-    if (res.success) {     
-          Toast.fire({
-            icon: 'success',
-            title: res.message
-          })
-    } else {
-        Toast.fire({
-            icon: 'error',
-            title: res.message
-          })
-    }
+function montaPacientes(pacientes) {
+    document.querySelector('#listaPacientes').innerHTML = '';
+
+    pacientes.forEach(paciente => {
+        document.querySelector('#listaPacientes').innerHTML += `
+            <li class='list-group-item p-0 d-flex'>
+                <h6>${paciente.nmPaciente}</h6>
+                <div class='ms-auto'>
+                    <span class="badge bg-primary">${paciente.dtNascimento}</span>
+                    <span class="badge bg-success btn">Alterar</span>
+                    <span class="badge bg-danger btn" onClick='excluir(${paciente.id})'>X</span>
+                </div>
+            </li>
+        `    
+    });
+    
+}
+
+function excluir(id) {
+    const dados = {id: id};
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: './_php/deletarExame.php',
+        async: true,
+        data: dados,
+        success: function (response) {
+            exibeAlerta(response)
+
+            if (!response.success) return
+            buscaPacientes()     
+        }
+    });    
 }

@@ -20,23 +20,16 @@
            <div class="collapse navbar-collapse" id="navbarNavDropdown">
                <ul class="navbar-nav">
                    <li class="nav-item">
-                       <span class="nav-link active" data-bs-toggle="modal" data-bs-target="#CadastroE" style="cursor: pointer;">Cadastro de Exames</span>
+                       <a class="nav-link active btn" data-bs-toggle="modal" data-bs-target="#CadastroE">Cadastro de Exames</a>
                    </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#PesquisarE" style="cursor: pointer;">Pesquisa de Exames</a>
+                        <a class="nav-link btn" data-bs-toggle="modal" data-bs-target="#PesquisarE" onclick="buscaPacientes()">Pesquisa de Exames</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#AlterarE" style="cursor: pointer;">Alterar dados de Exames</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#DeletarE" style="cursor: pointer;">Deletar Exames</a>
-                    </li>
-                   <li class="nav-item dropdown" style="left:40vw;">
+                   <li class="nav-item dropdown" style="left:60vw;">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Usuário
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="./login.html">Alterar dados</a></li>
                       <li><a class="dropdown-item" href="./login.html">Sair</a></li>
                     </ul>
                   </li>
@@ -55,49 +48,45 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Sair"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" onsubmit="cadastroE(event)">
+                        <form method="POST" enctype="multipart/form-data" onsubmit="cadastroExa(event)">
                             <div class="mb-3">
-                                <label class="col-form-label">Nome paciente</label>
-                                    <input type="text" class="form-control">
+                                <label class="col-form-label col-6">Nome paciente</label>
+                                    <input type="text" name="nmPaciente" class="form-control" autocomplete="off">
                                 <label class="col-form-label">Endereço</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" name="endereco" class="form-control" autocomplete="off">
                                 <label class="col-form-label">Data de Nascimento</label>
-                                    <input type="date" class="form-control">
+                                    <input type="date" name="dtNascimento" class="form-control">
                                 <label class="col-form-label">CPF</label>
-                                    <input type="text" class="form-control" onkeypress="$(this).mask('000.000.000-00');">
+                                    <input type="text" name="cpf" class="form-control" onkeypress="$(this).mask('000.000.000-00');" autocomplete="off">
                                 <label class="col-form-label">Exame do paciente</label>
-                                    <input type="file" class="form-control">
+                                    <input type="file" accept="application/pdf" name="arqExame" class="form-control" autocomplete="off">
                             </div>  
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success col-md-3">Cadastrar</button>
+                            </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success col-md-3">Cadastrar</button>
                     </div>
                 </div>  
             </div>
         </div>
         <!-- Pesquisa de Exames -->
         <div class="modal fade" id="PesquisarE" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="Pesquisar-Label" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="Pesquisar-Label">Pesquisa de Exames</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <form method="POST">
+                        <div class="m-3">
+                            <label class="col-form-label">Nome paciente</label>
+                            <input onkeyup="pesquisaComFiltro(event)" type="text" class="form-control" autocomplete="off">
+                        </div>  
+                    </form>
                     <div class="modal-body">
-                        <form method="POST">
-                            <div class="mb-3">
-                                <label class="col-form-label">Nome paciente</label>
-                                    <input type="text" class="form-control">
-                            </div>  
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                            </svg>
-                        </button>
+                        <ul class="list-group list-group-flush" id="listaPacientes">
+                            
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -132,36 +121,6 @@
                 </div>  
             </div>
         </div>
-        <!-- Deletar Exames -->
-        <div class="modal fade" id="DeletarE" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="Deletar-Label" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="Deletar-Label">Deletar Exames</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Sair"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="POST">
-                            <div class="mb-3">
-                                <label class="col-form-label">Nome paciente</label>
-                                    <input type="text" class="form-control">
-                                <label class="col-form-label">Endereço</label>
-                                    <input type="text" class="form-control">
-                                <label class="col-form-label">Data de Nascimento</label>
-                                    <input type="date" class="form-control">
-                                <label class="col-form-label">CPF</label>
-                                    <input type="text" class="form-control" onkeypress="$(this).mask('000.000.000-00');">
-                                <label class="col-form-label">Exame do paciente</label>
-                                    <input type="file" class="form-control">
-                            </div>  
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger col-md-3">Deletar</button>
-                    </div>
-                </div>  
-            </div>
-        </div>
     </main>
     <!-- RODAPÉ -->
     <footer class="card-footer fixed-bottom bg-light">
@@ -173,7 +132,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./_js/jquery-3.5.1.min.js"></script>
-    <script src="./_js/cadastro_exame.js"></script>
+    <script src="./_js/script.js"></script>
+    <script src="./_js/exame.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 </body>
 

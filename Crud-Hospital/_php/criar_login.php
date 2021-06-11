@@ -7,7 +7,7 @@
     $senha = $_POST["senha"];
 
     $sql = "INSERT INTO tbusers(nome,email,senha)
-        VALUES('$nome','$email','$senha')";
+            VALUES('$nome','$email','$senha')";
 
     $sql1 = "SELECT * FROM tbusers WHERE nome='$nome' AND email='$email'";
 
