@@ -25,4 +25,3 @@ if (isset($_FILES["arqExame"])) {
 	}
 
 }
-?>
